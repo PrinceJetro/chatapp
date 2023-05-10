@@ -61,7 +61,8 @@
         background-color: rgba(0,0,0,0.3) !important;
         border:0 !important;
         color:white !important;
-        height: 60px !important;
+        height: 100px !important;
+        font-size: 48px;
         overflow-y: auto;
     }
         .type_msg:focus{
@@ -81,6 +82,9 @@ background-color: rgba(0,0,0,0.3) !important;
         border:0 !important;
         color: white !important;
         cursor: pointer;
+        font-size: 48px;
+        height: 100px;
+        width: 100px;
     }
     .search_btn{
         border-radius: 0 15px 15px 0 !important;
@@ -102,36 +106,26 @@ background-color: rgba(0,0,0,0.3) !important;
         background-color: rgba(0,0,0,0.3);
 }
     .user_img{
-        height: 70px;
-        width: 70px;
+        height: 120px;
+        width: 120px;
         border:1.5px solid #f5f6fa;
     
     }
     .user_img_msg{
-        height: 40px;
-        width: 40px;
+        height: 75px;
+        width: 75px;
         border:1.5px solid #f5f6fa;
     
     }
 .img_cont{
-        position: relative;
-        height: 70px;
-        width: 70px;
+        height: 150px;
+        width: 150px;
 }
 .img_cont_msg{
         height: 40px;
         width: 40px;
 }
-.online_icon{
-    position: absolute;
-    height: 15px;
-    width:15px;
-    background-color: #4cd137;
-    border-radius: 50%;
-    bottom: 0.2em;
-    right: 0.4em;
-    border:1.5px solid white;
-}
+
 .offline{
     background-color: #c23616 !important;
 }
@@ -141,7 +135,7 @@ background-color: rgba(0,0,0,0.3) !important;
     margin-left: 15px;
 }
 .user_info span{
-    font-size: 20px;
+    font-size: 48px;
     color: white;
 }
 .user_info p{
@@ -178,10 +172,10 @@ color: rgba(255,255,255,0.6);
     position: relative;
 }
 .msg_time{
+    font-size: 24px;
     left: 0;
     bottom: -15px;
     color: rgba(255,255,255,0.5);
-    font-size: 10px;
 }
 .msg_time_send{
     position: absolute;
@@ -196,10 +190,10 @@ color: rgba(255,255,255,0.6);
 #action_menu_btn{
     position: absolute;
     right: 10px;
-    top: 10px;
+    top: 20px;
     color: white;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 48px;
 }
 .action_menu{
     z-index: 1;
@@ -208,8 +202,8 @@ color: rgba(255,255,255,0.6);
     background-color: rgba(0,0,0,0.5);
     color: white;
     border-radius: 15px;
-    top: 30px;
-    right: 15px;
+    top: 60;
+    right: 50px;
     display: none;
 }
 .action_menu ul{
@@ -219,6 +213,7 @@ margin: 0;
 }
 .action_menu ul li{
     width: 100%;
+    font-size: 40px;
     padding: 10px 15px;
     margin-bottom: 5px;
 }
@@ -235,6 +230,10 @@ margin: 0;
     margin-bottom: 15px !important;
 }
 }
+
+#participants{
+    display: none;
+}
 </style>
     </head>
 	<!--Coded With Love By Mutiullah Samim-->
@@ -242,30 +241,24 @@ margin: 0;
 
 
 		<div class="container-fluid ">
-			<div class="" >
+			<div class="main" >
 				<div class="chat" >
 					<div class="card">
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
 									<img src="{{rooms.host.image_link}}" class="rounded-circle user_img">
-									<span class="online_icon"></span>
+									
 								</div>
 								<div class="user_info">
 									<span>{{rooms.host.username}}</span>
-								</div>
-								<div class="video_cam">
-									<span><i class="fas fa-video"></i></span>
-									<span><i class="fas fa-phone"></i></span>
 								</div>
 							</div>
 							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
 							<div class="action_menu">
 								<ul>
-									<a href="{% url 'userprofile' rooms.host.id %}"><li><i class="fas fa-user-circle"></i> View profile</li></a>  
-									<li><i class="fas fa-users"></i> Add to close friends</li>
-									<li><i class="fas fa-plus"></i> Add to group</li>
-									<li><i class="fas fa-ban"></i> Block</li>
+									<a href="{% url 'userprofile' rooms.host.id %}"><li><i class="fas fa-user-circle"></i> View {{rooms.host.username}}'s Profile</li></a>  
+									<li onclick="participants()"><i class="fas fa-users"></i> View Participants</li>
 								</ul>
 							</div>
 						</div>
@@ -278,19 +271,19 @@ margin: 0;
                         {% endif %}
 
 
-						<div class="card-body msg_card_body">
+						<div class="card-body msg_card_body" id="msg_card_body">
                             {% for i in room_messages %}
                             {% if request.user == i.user %}
                             <a href="{% url 'delete-message' i.id%}">Delete</a>	
                             {% endif %}
-                            <div class="" style="width: 100%;">
+                            <div class="" style="width: 100%; margin-top : 10px">
                             <div>
                                     
                                     <div class="">
-                                        <img src="{{i.user.image_link}}" class="rounded-circle user_img_msg"> <span style="color: aliceblue;">@ <a href="{% url 'userprofile' i.user.id %}">{{i.user.username}}</span></a> 
+                                        <img src="{{i.user.image_link}}" class="rounded-circle user_img_msg"> <span style="color: aliceblue;"> <span style="font-size: 42px;"><a href="{% url 'userprofile' i.user.id %}">@{{i.user.username}}</span></a></span> 
                                     </div>
                                     <div class="msg_cotainer"  style="width: 100%">
-                                        <h5 style="color: aliceblue;">{{i.body}}</h5> 
+                                        <h1 style="color: aliceblue;">{{i.body}}</h1> 
                                         <span class="msg_time" style="color:maroon">{{i.created | timesince}} ago</span>
                                     </div>
                                 </div>
@@ -298,14 +291,18 @@ margin: 0;
 							</div>
                             {% endfor %}
 
-                            {% for participants in participants %}
-
-                            <h1>{{participants.username}}</h1>
-                    
-                            {% endfor %}
-
 
 						</div>
+
+                        <div id="participants">
+                            <h1 style="text-align: center;">Participants</h1>
+                            <ul>
+                            {% for participants in participants %}
+                                <li><h3>{{participants.username}}</h3></li>
+                            {% endfor %}
+                        </ul>
+                        </div>
+
                         <form action="" method="post"  id="form">
                         <div class="card-footer">
 							<div class="input-group">
@@ -317,7 +314,7 @@ margin: 0;
                                 
 								<textarea name="body" id="body" required class="form-control type_msg" placeholder="Type your message..."></textarea>
 								<div class="input-group-append">
-									<span class="input-group-text send_btn"  onclick="ready()"><i class="fas fa-location-arrow"></i></span>
+									<span class="input-group-text send_btn"  onclick="ready()"><i class="fas fa-location-arrow" style="font-size: 48px;"></i></span>
 								</div>
 							</div>
 						</div>
@@ -325,6 +322,8 @@ margin: 0;
 					</div>
 				</div>
 			</div>
+
+
 		</div>
 
         <script>
@@ -334,22 +333,27 @@ margin: 0;
                 });
                     });
 
-            function ready(){
-                let form = document.getElementById("form");
-                let input = document.getElementById("body").value;
-                if (input != ""){
-                    form.submit()
-                }  
-                else{
-                    return alert("Type a message pls")
-                }
-            }
+                    function ready(){
+                        let form = document.getElementById("form");
+                        let input = document.getElementById("body").value;
+                        if (input != ""){
+                            form.submit()
+                        }  
+                        else{
+                            return alert("Type a message pls")
+                        }
+                    }
 
-            setInterval(async function(){
-                let response = await fetch("/room/" + 2)
-                let shows = await response.text();            
-
-            }, 5000)
+                    function participants(){
+                        if (document.getElementById("msg_card_body").style.display == 'block'){
+                            document.getElementById("msg_card_body").style.display = 'none';
+                            document.getElementById("participants").style.display= 'block';
+                        }
+                        else{
+                            document.getElementById("msg_card_body").style.display = 'block';
+                            document.getElementById("participants").style.display= 'none';
+                        }
+                    }
         </script>
 	</body>
 </html>

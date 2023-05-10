@@ -52,6 +52,8 @@
         align-content: center;
     }
     .search{
+        height: 75px;
+        font-size: 32px;
         border-radius: 15px 0 0 15px !important;
         background-color: rgba(0,0,0,0.3) !important;
         border:0 !important;
@@ -87,6 +89,7 @@ background-color: rgba(0,0,0,0.3) !important;
         cursor: pointer;
     }
     .search_btn{
+        height: 100%;
         border-radius: 0 15px 15px 0 !important;
         background-color: rgba(0,0,0,0.3) !important;
         border:0 !important;
@@ -106,8 +109,8 @@ background-color: rgba(0,0,0,0.3) !important;
         background-color: rgba(0,0,0,0.3);
 }
     .user_img{
-        height: 70px;
-        width: 70px;
+        height: 100%;
+        width: 100%;
         border:1.5px solid #f5f6fa;
     
     }
@@ -119,8 +122,8 @@ background-color: rgba(0,0,0,0.3) !important;
     }
 .img_cont{
         position: relative;
-        height: 70px;
-        width: 70px;
+        height: 120px;
+        width: 120px;
 }
 .img_cont_msg{
         height: 40px;
@@ -145,11 +148,11 @@ background-color: rgba(0,0,0,0.3) !important;
     margin-left: 15px;
 }
 .user_info span{
-    font-size: 20px;
+    font-size: 48px;
     color: white;
 }
 .user_info p{
-font-size: 10px;
+font-size: 24px;
 color: rgba(255,255,255,0.6);
 }
 .video_cam{
@@ -243,73 +246,75 @@ margin: 0;
     </head>
 	<!--Coded With Love By Mutiullah Samim-->
 	<body>
-        <h1>{{request.user}}</h1>
-        <a href="{% url 'home' %}">All room </a>
-        <a href="{% url 'create-room' %}">Create room </a>
-		<div class="container-fluid h-100">
-			<div class=" chatroom"><div class="card mb-sm-3 mb-md-0 contacts_card">
-                <div class="card-header">
-                    <form action="" id="searchform">
-                        
-                    <div class="input-group">
-                        <input type="text" placeholder="Search..." name="q" class="form-control search" >
-                        <div class="input-group-prepend">
-                            <span class="input-group-text search_btn"><i class="fas fa-search" onclick="document.getElementById('searchform').submit()"></i></span>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <div class="card-body contacts_body">
-                    <ui class="contacts">
-                        {% for room in rooms %}
-                        {% if  request.user == room.host  %}
-                        <a href="{% url 'delete-room' room.id %}"><span style="float: right;">Delete</span></a>
-                        {% endif %}
-                        <a href="{% url 'chatroom' room.id %}"><li class="active">
-                            <div class="d-flex bd-highlight">
-                                <div class="img_cont">
-                                    <img src="{{room.host.image_link}}" class="rounded-circle user_img">
-                                    <span class="online_icon"></span>
-                                </div>
-                                <div class="user_info">
-                                    <span>{{room.name}}</span><br>
-                                    <p> Created by @{{room.host.username}}</p>
-                                </div>
+        <div class="container-fluid"> 
+            <h1>{{request.user}}</h1>
+            <a href="{% url 'home' %}">All room </a>
+            <a href="{% url 'create-room' %}">Create room </a>
+            <div class="container-fluid h-100">
+                <div class=" chatroom"><div class="card mb-sm-3 mb-md-0 contacts_card">
+                    <div class="card-header">
+                        <form action="" id="searchform">
+                            
+                        <div class="input-group">
+                            <input type="text" placeholder="Search..." name="q" class="form-control search" >
+                            <div class="input-group-prepend">
+                                <span class="input-group-text search_btn"><i class="fas fa-search" onclick="document.getElementById('searchform').submit()"></i></span>
                             </div>
-                        </li></a>
-
-                        {% endfor %}
-                    </ui>
-                </div>
-                <div class="card-footer"></div>
-            </div></div>
-		</div>
-
-        {% for i in room %}
-
-        <div>
-            <a href="{% url 'home' %}?q={{i.host}}">{{i.host}}</a>
-        </div>
-
-        {% endfor %}
-
-
-
-
-        <script>
-            $(document).ready(function(){
-                $('#action_menu_btn').click(function(){
-                    $('.action_menu').toggle();
-                });
+                        </div>
+                        </form>
+                    </div>
+                    <div class="card-body contacts_body">
+                        <ui class="contacts">
+                            {% for room in rooms %}
+                            {% if  request.user == room.host  %}
+                            <a href="{% url 'delete-room' room.id %}"><span style="float: right;">Delete</span></a>
+                            {% endif %}
+                            <a href="{% url 'chatroom' room.id %}"><li class="active">
+                                <div class="d-flex bd-highlight">
+                                    <div class="img_cont">
+                                        <img src="{{room.host.image_link}}" class="rounded-circle user_img">
+                                        <span class="online_icon"></span>
+                                    </div>
+                                    <div class="user_info">
+                                        <span>{{room.name}}</span><br>
+                                        <p> Created by @{{room.host.username}}</p>
+                                    </div>
+                                </div>
+                            </li></a>
+    
+                            {% endfor %}
+                        </ui>
+                    </div>
+                    <div class="card-footer"></div>
+                </div></div>
+            </div>
+    
+            {% for i in room %}
+    
+            <div>
+                <a href="{% url 'home' %}?q={{i.host}}">{{i.host}}</a>
+            </div>
+    
+            {% endfor %}
+    
+    
+    
+    
+            <script>
+                $(document).ready(function(){
+                    $('#action_menu_btn').click(function(){
+                        $('.action_menu').toggle();
                     });
-
-
-                    let input = document.querySelector('input');
-                    input.addEventListener("input", async  function(){
-                        console.log("yes")
-                        let response = await fetch('/?q=' + input.value);
-                        let answer = await response.text()
-                    })
-        </script>
+                        });
+    
+    
+                        let input = document.querySelector('input');
+                        input.addEventListener("input", async  function(){
+                            console.log("yes")
+                            let response = await fetch('/?q=' + input.value);
+                            let answer = await response.text()
+                        })
+            </script>
+        </div>
 	</body>
 </html>

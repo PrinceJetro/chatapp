@@ -138,7 +138,7 @@
                   <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
                       <div class="row align-items-center">
                           <div class="col-lg-6 mb-4 mb-lg-0">
-                              <img src="{{user.image_link}}" alt="...">
+                              <img src="{{user.image_link}}" alt="..." class="rounded-circle" width="250">
                           </div>
                           <div class="col-lg-6 px-xl-10">
                               <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
@@ -162,13 +162,15 @@
                       <div>
                           <span class="section-title text-primary mb-3 mb-sm-4">Rooms Created</span>
                           <ul style="list-style-type: none;padding: 0;margin: 0;"></ul>                          
+    
                           {% for i in rooms %}
-                          
-
-
-                            <li style="border: 1px solid #ddd;margin-top: -1px;background-color: #f6f6f6;padding: 12px; font-size:48px"><a href="{% url 'chatroom' i.id %}">{{i.name}}</a></li>
-                                                    {% endfor %}
-                                                  </ul>
+                          <li style="border: 1px solid #ddd;margin-top: -1px;background-color: #f6f6f6;padding: 12px; font-size:48px"><a href="{% url 'chatroom' i.id %}">{{i.name}}</a></li>
+                          {% empty %}
+                                <p>No Rooms created yet.</p>
+                          {% endfor %}
+    
+    
+                        </ul>
                       </div>
                   </div>
               </div>

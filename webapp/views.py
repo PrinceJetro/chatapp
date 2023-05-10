@@ -96,7 +96,7 @@ def logout_request(request):
 	messages.info(request, "You have successfully logged out.") 
 	return redirect("login")
 
-
+@login_required(login_url='login')
 def home(request):
     users = User.objects.all()
     q = request.GET.get('q') if request.GET.get("q") != None else ''
@@ -123,7 +123,7 @@ def userProfile(request,pk):
     }
     return render(request, 'profile.html', context)
 
-
+@login_required(login_url='login')
 def chatroom(request,pk):
     
     room = Room.objects.get(id=pk)
