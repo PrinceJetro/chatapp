@@ -12,7 +12,8 @@ from .models  import *
 from django.test import Client
 import json
 from .forms import  *
-
+from django.core import serializers
+from django.http import JsonResponse
 from webapp.storage import SupabaseStorage
 # Create your views here.
 
@@ -130,16 +131,13 @@ def chatroom(request,pk):
     print(room.host.id)
     participants = room.participants.all()
     if request.method == "POST":
-
-        if request.POST.get("body") == "":
-            return redirect('chatroom',pk=room.id)
         message = Message.objects.create(
             user = request.user,
             room = room,
             body = request.POST.get("body")
         )
         room.participants.add(request.user)
-        return redirect('chatroom',pk=room.id)
+        return redirect('chatroom',pk=room.id)  
     
     room_messages = room.message_set.all().order_by("-created")
     for i in room_messages:
@@ -147,6 +145,14 @@ def chatroom(request,pk):
     context = {"rooms": room, 'room_messages': room_messages, 'participants': participants}
     print(room)
     return render(request, 'chat.html', context)
+
+
+
+# def get_latest_items(request,pk):
+#     room =  Room.objects.get(id=pk)
+#     items = room.message_set.all().order_by("-created")
+#     data = serializers.serialize('json', items)
+#     return JsonResponse(data, safe=False)
 
 
 def createRoom(request):

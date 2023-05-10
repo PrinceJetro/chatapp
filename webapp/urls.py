@@ -8,6 +8,7 @@ urlpatterns = [
     path("login", login, name="login"),
     path("home", home, name="home"),
     path("room/<str:pk>", chatroom, name="chatroom"),
+   #  path('get-latest-items/<str:pk>', get_latest_items, name='get-latest-items'),
     path("profile/<str:pk>", userProfile, name="userprofile"),
     path("create-room", createRoom, name="create-room"),
     path("delete-room/<str:pk>", deleteRoom, name="delete-room"),

@@ -326,6 +326,12 @@ margin: 0;
 
 		</div>
 
+
+
+        <div id="latest-items-container">
+
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
                 $('#action_menu_btn').click(function(){
@@ -354,6 +360,45 @@ margin: 0;
                             document.getElementById("participants").style.display= 'none';
                         }
                     }
+
+
+//                    $(document).ready(function() {
+  //                      // Function to retrieve and display the latest items
+    //                    function getLatestItems() {
+      //                      $.ajax({
+        //                        url: '/get-latest-items/2',  // URL to your Django view
+          //                      type: 'GET',
+            //                    dataType: 'json',
+              //                  success: function(data) {
+                //                    // Parse the JSON string into a JavaScript object
+                  //                  data = JSON.parse(data);
+                    //                console.log(data)
+                      //              
+                        //            // Handle the retrieved data
+                          //          var itemsContainer = $('#latest-items-container');
+                            //        itemsContainer.empty();
+                    //
+                     //               // Loop through the retrieved items and append them to the container
+                       //             $.each(data, function(index, item) {
+                      //                  var newItem = $('<p>').text(item.fields.body);
+                        //               itemsContainer.append(newItem);
+                         //           });
+                           //     },
+                        //        error: function(xhr, errmsg, err) {
+                          //          console.log(errmsg);
+                            //    }
+         ///                   });
+          //              }
+            //        
+                        // Call the function initially and set it to run at regular intervals
+                //        getLatestItems();
+              // /         setInterval(getLatestItems, 5000);  // Refresh every 5 seconds (adjust as needed)
+                //    });
+                     
+
+
+
+
         </script>
 	</body>
 </html>
