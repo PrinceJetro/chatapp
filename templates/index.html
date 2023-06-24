@@ -14,6 +14,9 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
 
 <style>
+    .btn{
+        font-size: 48px;
+    }
     body,html{
         height: 100%;
         margin: 0;
@@ -250,6 +253,7 @@ margin: 0;
             <h1>{{request.user}}</h1>
             <a href="{% url 'home' %}"><button class="btn btn-primary mb-4">All room </button> </a>
             <a href="{% url 'create-room' %}"><button  class="btn btn-primary mb-4">Create room</button> </a>
+
             <div class="container-fluid h-100">
                 <div class=" chatroom"><div class="card mb-sm-3 mb-md-0 contacts_card">
                     <div class="card-header">
@@ -262,12 +266,13 @@ margin: 0;
                             </div>
                         </div>
                         </form>
+        
                     </div>
                     <div class="card-body contacts_body">
                         <ui class="contacts">
                             {% for room in rooms %}
                             {% if  request.user == room.host  %}
-                            <a href="{% url 'delete-room' room.id %}"><span style="float: right;">Delete</span></a>
+                            <a href="{% url 'delete-room' room.id %}"><span style="float: right;font-size:32px">Delete</span></a>
                             {% endif %}
                             <a href="{% url 'chatroom' room.id %}"><li class="active">
                                 <div class="d-flex bd-highlight">
@@ -277,7 +282,7 @@ margin: 0;
                                     </div>
                                     <div class="user_info">
                                         <span>{{room.name}}</span><br>
-                                        <p> Created by @{{room.host.username}}</p>
+                                        <p> Created by {{room.host.username}}</p>
                                     </div>
                                 </div>
                             </li></a>

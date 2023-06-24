@@ -112,7 +112,8 @@ body {
 
         {%  csrf_token %}
         <input type="text" placeholder="username" name="username"/>
-        <input type="password" placeholder="password" name="password"/>
+        <i class="fa fa-eye" onclick="togglepassword()" style="float: left;"></i>
+        <input type="password" placeholder="password" name="password" id="password"/>
         <button type="submit">login</button>
         <p class="message">Not registered? <a href="{% url 'register' %}">Create an account</a></p>
       </form>
@@ -124,6 +125,16 @@ body {
         $('.message a').click(function(){
             $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
          });
+         function togglepassword(){
+          let x=document.getElementById("password");    
+          console.log(x.type)
+          if(x.type === "password"){
+              x.type="text"
+          }
+          else{
+              x.type="password"
+          }
+      }
     </script>
 
 

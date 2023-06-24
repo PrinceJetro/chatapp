@@ -57,12 +57,14 @@
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input required type="password" id="form3Example4cg" class="form-control form-control-lg" name="psw1" />
+                  <i class=" fa fa-eye" onclick="togglepassword1()" ></i><br>
+                  <input required type="password" id="password1" class="form-control form-control-lg " name="psw1" />
                   <label class="form-label" for="form3Example4cg">Password</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input required type="password" id="form3Example4cdg" class="form-control form-control-lg" name="psw2"/>
+                  <i class=" fa fa-eye" onclick="togglepassword2()" ></i><br>
+                  <input required type="password" id="password2" class="form-control form-control-lg" name="psw2"/>
                   <label class="form-label" for="form3Example4cdg">Repeat your password</label>
                 </div>
 
@@ -85,6 +87,29 @@
 
             </div>
           </div>
+          
+<script>
+  function togglepassword1(){
+    let x=document.getElementById("password1");    
+    console.log(x.type)
+    if(x.type === "password"){
+        x.type="text"
+    }
+    else{
+        x.type="password"
+    }
+}
+  function togglepassword2(){
+    let x=document.getElementById("password2");    
+    console.log(x.type)
+    if(x.type === "password"){
+        x.type="text"
+    }
+    else{
+        x.type="password"
+    }
+}
+</script>
         </div>
       </div>
     </div>
