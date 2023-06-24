@@ -248,8 +248,8 @@ margin: 0;
 	<body>
         <div class="container-fluid"> 
             <h1>{{request.user}}</h1>
-            <a href="{% url 'home' %}">All room </a>
-            <a href="{% url 'create-room' %}">Create room </a>
+            <a href="{% url 'home' %}"><button class="btn btn-primary mb-4">All room </button> </a>
+            <a href="{% url 'create-room' %}"><button  class="btn btn-primary mb-4">Create room</button> </a>
             <div class="container-fluid h-100">
                 <div class=" chatroom"><div class="card mb-sm-3 mb-md-0 contacts_card">
                     <div class="card-header">
