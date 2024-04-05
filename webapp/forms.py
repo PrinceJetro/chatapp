@@ -4,7 +4,7 @@ from .models import *
 
 class RoomForm(ModelForm):
     class Meta:
-        model = Room
+        model = Complaint
         fields = '__all__'
         exclude = ['host', 'participants', 'topic']
 

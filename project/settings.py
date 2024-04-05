@@ -37,12 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'webapp.apps.WebappConfig'
+    'webapp.apps.WebappConfig',
+    'rest_framework',
+    'corsheaders'
 ]
 
 AUTH_USER_MODEL = 'webapp.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -50,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'project.urls'
 
@@ -75,14 +80,25 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#          'NAME': 'postgres',
+#          'HOST' : "db.fmlguqqzwmsqgobmvzll.supabase.co",
+#          "PORT" : "5432",
+#          'USER' : "postgres",
+#          'PASSWORD' : "b7L4Ci3C45gwQpdp",
+#      }
+# }
+
 DATABASES = {
      'default': {
          'ENGINE': 'django.db.backends.postgresql_psycopg2',
          'NAME': 'postgres',
-         'HOST' : "db.fmlguqqzwmsqgobmvzll.supabase.co",
+         'HOST' : "aws-0-ca-central-1.pooler.supabase.com",
          "PORT" : "5432",
-         'USER' : "postgres",
-         'PASSWORD' : "b7L4Ci3C45gwQpdp",
+         'USER' : "postgres.gwdkjjupgtergkyklyel",
+         'PASSWORD' : "yabatech_anonymous",
      }
 }
 
@@ -124,7 +140,6 @@ SUPABASE_URL = 'https://fmlguqqzwmsqgobmvzll.supabase.co'
 SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZtbGd1cXF6d21zcWdvYm12emxsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY4MTgxMzEzMywiZXhwIjoxOTk3Mzg5MTMzfQ.SosGz7OXEzSeTkXCvFduDY59WxQ4xatl3ogDey7TDDM'
 SUPABASE_BUCKET = 'Jetro'
 
-
 STATIC_URL = 'static/'
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
@@ -133,3 +148,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_ALL_ORIGINS = True
