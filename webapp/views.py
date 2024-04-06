@@ -40,6 +40,45 @@ def getAll(request):
 
 
 
+# url = ''
+# @api_view(["POST"])
+# def createComplaint(request):
+#     data = request.data
+
+#     # Extract the uploaded image from the request data
+#     image_file = request.FILES.get('image')
+
+#     if image_file:
+#         # If an image is uploaded, save it to Supabase storage
+#         storage = SupabaseStorage()
+#         post = 'anonymous/' + image_file.name
+#         try:
+#             filename = storage.save(post, image_file)
+#             image_url = storage.url(filename)
+#         except:
+#             return HttpResponse("Failed to upload image to Supabase storage. Please try again.")
+
+#         # Create the complaint object with the extracted data
+#         global url 
+#         url = storage.url(filename)
+#         print(url)
+#         complaint = Complaint.objects.create(
+#             body=data["complaint"],
+#             categories=data["category"],
+#             img=url,  # Assign the URL of the uploaded image
+#             image_link=url
+#         )
+
+#         # Serialize the complaint object
+#         serializer = ComplaintSerializer(complaint, many=False)
+
+#         # Return the serialized data in the response
+#         return Response(serializer.data)
+
+#     else:
+#         return HttpResponse("No image uploaded")
+
+
 url = ''
 @api_view(["POST"])
 def createComplaint(request):
@@ -58,25 +97,28 @@ def createComplaint(request):
         except:
             return HttpResponse("Failed to upload image to Supabase storage. Please try again.")
 
-        # Create the complaint object with the extracted data
+        # Assign the URL of the uploaded image
         global url 
         url = storage.url(filename)
-        print(url)
-        complaint = Complaint.objects.create(
-            body=data["complaint"],
-            categories=data["category"],
-            img=url,  # Assign the URL of the uploaded image
-            image_link=url
-        )
-
-        # Serialize the complaint object
-        serializer = ComplaintSerializer(complaint, many=False)
-
-        # Return the serialized data in the response
-        return Response(serializer.data)
-
     else:
-        return HttpResponse("No image uploaded")
+        # If no image is uploaded, provide a default image URL
+        # You can replace 'default_image_url' with the actual URL of your default image
+        image_url = 'default_image_url'
+
+    # Create the complaint object with the extracted data
+    complaint = Complaint.objects.create(
+        body=data["complaint"],
+        categories=data["category"],
+        img=image_url,  # Assign the URL of the image (either uploaded or default)
+        image_link=image_url
+    )
+
+    # Serialize the complaint object
+    serializer = ComplaintSerializer(complaint, many=False)
+
+    # Return the serialized data in the response
+    return Response(serializer.data)
+
 
 
 
