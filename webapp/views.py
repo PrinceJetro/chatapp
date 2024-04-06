@@ -65,7 +65,8 @@ def createComplaint(request):
         complaint = Complaint.objects.create(
             body=data["complaint"],
             categories=data["category"],
-            img=url  # Assign the URL of the uploaded image
+            img=url,  # Assign the URL of the uploaded image
+            image_link=url
         )
 
         # Serialize the complaint object
