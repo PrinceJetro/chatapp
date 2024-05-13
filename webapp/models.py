@@ -17,3 +17,13 @@ class Complaint(models.Model):
      image_link = models.TextField(max_length=1000, null=True)
      def __str__(self):
          return self.categories
+
+
+class OnlineClass(models.Model):
+    full_name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    phone_number = models.CharField(max_length=20)  # Changed to CharField
+    more = models.TextField()
+
+    def __str__(self):
+        return self.full_name
