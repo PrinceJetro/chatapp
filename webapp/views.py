@@ -116,25 +116,12 @@ Dear {data['full_name']},
 
 Thank you for registering for the Web Development class with PrinceJetro Web Dev Training! We're excited to have you onboard.
 
-Here are some details about the course:
-- Course Schedule: Saturdays, starting from the 1st of June, from 1:00 PM to 4:00 PM via Zoom/Google Meet (3 hours per session)
-- Target Audience: Beginners with at least 35% knowledge of HTML (not suitable for absolute beginners)
-- Teaching Approach: Project-driven classes with a focus on practical application
-- Interactive Learning: Engage in interactive sessions with hands-on projects
-- Free Trial: The first class is free of charge
-- Course Fee: Subsequent classes are paid, at a token of N2500 per class
-- Duration: The course runs for 3 months
-- Learning Resources: Access to shared resources and materials
-- One-on-One Sessions: Personalized one-on-one sessions with instructors
-- Additional Learning Materials: Links to YouTube videos for further learning
-- Assignment Projects: Projects assigned after every class to reinforce learning
-
 Please stay tuned for further communication regarding the course. If you have any questions or need assistance, feel free to reach out to us at adegbuyijephthah@gmail.com or call Jephthah Adegbuyi at 2348088981691.
 
 We look forward to embarking on this learning journey with you!
 
 Best regards,
-PrinceJetro Web Dev Training
+PrinceJetro Web Development Training
 """
 
     # Send the email
