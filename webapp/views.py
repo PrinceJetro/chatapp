@@ -117,7 +117,7 @@ Dear {data['full_name']},
 
 Thank you for registering for the Web Development class with PrinceJetro Web Dev Training! We're excited to have you onboard.
 
-Please stay tuned for further communication regarding the course. If you have any questions or need assistance, feel free to reach out to us at adegbuyijephthah@gmail.com or call Jephthah Adegbuyi at 2348088981691.
+Please stay tuned for further communication regarding the course. If you have any questions or need assistance, feel free to reach out to us at princejetro123@gmail.com or call Jephthah Adegbuyi at 2348088981691.
 
 We look forward to embarking on this learning journey with you!
 
