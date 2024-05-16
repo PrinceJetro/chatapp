@@ -108,8 +108,9 @@ def createStudent(request):
     serializer = StudentSerializer(student, many=False)
 
     # Email content
-    sender_email = 'adegbuyijephthah@gmail.com'
-    password = "olyg kany wqzi gnwf"
+    sender_email = 'princejetro123@gmail.com'
+    # for  adeguyijepphthah password = "olyg kany wqzi gnwf"
+    password = "iatu bier ypec yeqq"
     subject = "You have Successfully registered for the Web Development Class"
     body = f"""
 Dear {data['full_name']},
