@@ -29,13 +29,79 @@ import smtplib
 
 @api_view(["GET"])
 def getRoutes(request):
+    sender_email = 'princejetro123@gmail.com'
+    password = "iatu bier ypec yeqq"
+
+    for i in OnlineClass.objects.all():
+        receiver_email = i.email
+        subject = "Update on Web Development Training Program"
+        body = f"""
+Dear {i.full_name},
+
+I hope this message finds you well.
+
+We apologize for the delay in our classes. We want to inform you that the web development training program will resume next week, on Saturday, August 31, 2024.
+
+The first class will be an Introduction to Web Development, covering the following:
+
+**Overview:**
+This class will provide a basic introduction to web development, covering:
+- What is web development?
+- Key concepts to know
+- Essential applications to install
+- Real-world applications of web development
+- Programming languages involved
+- Various frameworks
+
+**Topics to be Covered:**
+1. **What is Web Development?**
+    - Definition and explanation
+    - Importance and relevance
+2. **Key Concepts to Know**
+    - Basic terminology
+    - Fundamentals of web development
+3. **Essential Applications to Install**
+    - Text editors/IDEs
+    - Browsers and developer tools
+    - Version control systems
+4. **Real-World Applications of Web Development**
+    - Examples of web applications
+    - Industries and use cases
+5. **Programming Languages Involved**
+    - HTML/CSS
+    - JavaScript
+    - Server-side languages (e.g., PHP, Python, Ruby)
+6. **Various Frameworks**
+    - Front-end frameworks (e.g., React, Angular, Vue)
+    - Back-end frameworks (e.g., Node.js, Django, Ruby on Rails)
+
+If you are still interested in attending, please feel free to start making the necessary preparations.
+
+Thank you for your patience and understanding.
+
+Best regards,
+
+Adegbuyi Jephthah
+"""
+
+        em = EmailMessage()
+        em["From"] = sender_email
+        em["To"] = receiver_email
+        em["Subject"] = subject
+        em.set_content(body)
+
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(sender_email, password)
+            smtp.sendmail(sender_email, receiver_email, em.as_string())
+        print(f"Email sent successfully to {receiver_email}!")
+
     routes = [
         {
             "endpoint": "/all"
         }
     ]
     return Response(routes)
-
 @api_view(["GET"])
 def getAll(request):
     note = Complaint.objects.all()
@@ -114,12 +180,45 @@ def createStudent(request):
     subject = "You have Successfully registered for the Web Development Class"
     body = f"""
 Dear {data['full_name']},
-
 Thank you for registering for the Web Development class with PrinceJetro Web Dev Training! We're excited to have you onboard.
 
-Please stay tuned for further communication regarding the course. If you have any questions or need assistance, feel free to reach out to us at princejetro123@gmail.com or call Jephthah Adegbuyi at 2348088981691.
+We want to inform you that the training program will begin on Saturday, August 31, 2024. The first class will be an Introduction to Web Development, covering topics such as:
+
+**Overview:**
+This class will provide a basic introduction to web development, covering:
+- What is web development?
+- Key concepts to know
+- Essential applications to install
+- Real-world applications of web development
+- Programming languages involved
+- Various frameworks
+
+**Topics to be Covered:**
+1. **What is Web Development?**
+    - Definition and explanation
+    - Importance and relevance
+2. **Key Concepts to Know**
+    - Basic terminology
+    - Fundamentals of web development
+3. **Essential Applications to Install**
+    - Text editors/IDEs
+    - Browsers and developer tools
+    - Version control systems
+4. **Real-World Applications of Web Development**
+    - Examples of web applications
+    - Industries and use cases
+5. **Programming Languages Involved**
+    - HTML/CSS
+    - JavaScript
+    - Server-side languages (e.g., PHP, Python, Ruby)
+6. **Various Frameworks**
+    - Front-end frameworks (e.g., React, Angular, Vue)
+    - Back-end frameworks (e.g., Node.js, Django, Ruby on Rails)
+
+Please feel free to start making the necessary preparations. If you have any questions or need assistance, reach out to us at princejetro123@gmail.com or call Jephthah Adegbuyi at +2348088981691.
 
 We look forward to embarking on this learning journey with you!
+Stay tuned for further information
 
 Best regards,
 PrinceJetro Web Development Training
