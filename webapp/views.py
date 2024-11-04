@@ -34,54 +34,31 @@ def getRoutes(request):
 
     for i in OnlineClass.objects.all():
         receiver_email = i.email
-        subject = "Update on Web Development Training Program"
+        subject = "Important Update: Web Development Training Class Today"
         body = f"""
 Dear {i.full_name},
 
 I hope this message finds you well.
 
-We apologize for the delay in our classes. We want to inform you that the web development training program will resume next week, on Saturday, August 31, 2024.
+It has come to my attention that our previous email regarding the resumption of the web development classes might not have reached everyone. I sincerely apologize for any confusion or inconvenience this may have caused.
 
-The first class will be an Introduction to Web Development, covering the following:
+To confirm, the class will take place today at 12:00 PM via Google Meet. 
 
-**Overview:**
-This class will provide a basic introduction to web development, covering:
-- What is web development?
-- Key concepts to know
-- Essential applications to install
-- Real-world applications of web development
-- Programming languages involved
-- Various frameworks
+*Payment Details:*
+To participate in today’s class, please make your payment to the following account:
 
-**Topics to be Covered:**
-1. **What is Web Development?**
-    - Definition and explanation
-    - Importance and relevance
-2. **Key Concepts to Know**
-    - Basic terminology
-    - Fundamentals of web development
-3. **Essential Applications to Install**
-    - Text editors/IDEs
-    - Browsers and developer tools
-    - Version control systems
-4. **Real-World Applications of Web Development**
-    - Examples of web applications
-    - Industries and use cases
-5. **Programming Languages Involved**
-    - HTML/CSS
-    - JavaScript
-    - Server-side languages (e.g., PHP, Python, Ruby)
-6. **Various Frameworks**
-    - Front-end frameworks (e.g., React, Angular, Vue)
-    - Back-end frameworks (e.g., Node.js, Django, Ruby on Rails)
+- *Account Number:* 2020615495
+- *Account Name:* Adegbuyi Jephthah Adebowale
+- *Bank:* Kuda Bank
 
-If you are still interested in attending, please feel free to start making the necessary preparations.
+After making the payment, kindly send the proof of payment to this WhatsApp number: https://wa.me/2348088981691.
 
-Thank you for your patience and understanding.
+Upon confirmation of your payment, you will receive the Google Meet link to join the class.
+
 
 Best regards,
-
 Adegbuyi Jephthah
+PrinceJetro Web Development Training
 """
 
         em = EmailMessage()
@@ -113,10 +90,8 @@ url = ''
 @api_view(["POST"])
 def createComplaint(request):
     data = request.data
-
     # Extract the uploaded image from the request data
     image_file = request.FILES.get('image')
-
     if image_file:
         # If an image is uploaded, save it to Supabase storage
         storage = SupabaseStorage()
@@ -134,7 +109,6 @@ def createComplaint(request):
         # If no image is uploaded, provide a default image URL
         # You can replace 'default_image_url' with the actual URL of your default image
         image_url = 'default_image_url'
-
     # Create the complaint object with the extracted data
     complaint = Complaint.objects.create(
         body=data["complaint"],
@@ -142,9 +116,31 @@ def createComplaint(request):
         img=image_url,  # Assign the URL of the image (either uploaded or default)
         image_link=image_url
     )
-
     # Serialize the complaint object
     serializer = ComplaintSerializer(complaint, many=False)
+
+    sender_email = 'princejetro123@gmail.com'
+    password = "iatu bier ypec yeqq"
+    receiver_email = 'davidblessing603@gmail.com'
+    subject = "Someone made a complaint"
+    body = f"""
+Dear Sir,
+Category: data["category"]
+Body: data["complaint"]
+<img src={image_url} >
+"""
+
+    em = EmailMessage()
+    em["From"] = sender_email
+    em["To"] = receiver_email
+    em["Subject"] = subject
+    em.set_content(body)
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(sender_email, password)
+        smtp.sendmail(sender_email, receiver_email, em.as_string())
+    print(f"Email sent successfully to {receiver_email}!")
 
     # Return the serialized data in the response
     return Response(serializer.data)
