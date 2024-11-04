@@ -11,10 +11,10 @@ class User(AbstractUser):
     
 
 class Complaint(models.Model):
-     categories = models.CharField(max_length=200)
-     body = models.TextField()
+     categories = models.CharField(max_length=2000)
+     body = models.TextField(max_length=10000)
      img = models.ImageField(null=True)
-     image_link = models.TextField(max_length=1000, null=True)
+     image_link = models.TextField(max_length=5000, null=True)
      def __str__(self):
          return self.categories
 

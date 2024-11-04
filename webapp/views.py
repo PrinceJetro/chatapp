@@ -29,56 +29,14 @@ import smtplib
 
 @api_view(["GET"])
 def getRoutes(request):
-    sender_email = 'princejetro123@gmail.com'
-    password = "iatu bier ypec yeqq"
-
-    for i in OnlineClass.objects.all():
-        receiver_email = i.email
-        subject = "Important Update: Web Development Training Class Today"
-        body = f"""
-Dear {i.full_name},
-
-I hope this message finds you well.
-
-It has come to my attention that our previous email regarding the resumption of the web development classes might not have reached everyone. I sincerely apologize for any confusion or inconvenience this may have caused.
-
-To confirm, the class will take place today at 12:00 PM via Google Meet. 
-
-*Payment Details:*
-To participate in today’s class, please make your payment to the following account:
-
-- *Account Number:* 2020615495
-- *Account Name:* Adegbuyi Jephthah Adebowale
-- *Bank:* Kuda Bank
-
-After making the payment, kindly send the proof of payment to this WhatsApp number: https://wa.me/2348088981691.
-
-Upon confirmation of your payment, you will receive the Google Meet link to join the class.
-
-
-Best regards,
-Adegbuyi Jephthah
-PrinceJetro Web Development Training
-"""
-
-        em = EmailMessage()
-        em["From"] = sender_email
-        em["To"] = receiver_email
-        em["Subject"] = subject
-        em.set_content(body)
-
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-            smtp.login(sender_email, password)
-            smtp.sendmail(sender_email, receiver_email, em.as_string())
-        print(f"Email sent successfully to {receiver_email}!")
-
     routes = [
         {
             "endpoint": "/all"
         }
     ]
     return Response(routes)
+
+
 @api_view(["GET"])
 def getAll(request):
     note = Complaint.objects.all()
@@ -119,31 +77,40 @@ def createComplaint(request):
     # Serialize the complaint object
     serializer = ComplaintSerializer(complaint, many=False)
 
+    # Email details
     sender_email = 'princejetro123@gmail.com'
     password = "iatu bier ypec yeqq"
     receiver_email = 'davidblessing603@gmail.com'
     subject = "Someone made a complaint"
-    body = f"""
-Dear Sir,
 
-Category: {data["category"]}
+    # Create the HTML body content
+    html_body = f"""
+    <!DOCTYPE html>
+    <html>
+    <body>
+        <p>Dear Sir,</p>
+        <p>Category: {data["category"]}</p>
+        <p>Body: {data["complaint"]}</p>
+        <p><img src="{image_url}" alt="Attached Image"></p>
+    </body>
+    </html>
+    """
 
-Body: {data["complaint"]}
-
-<img src="{image_url}" alt="Attached Image">
-"""
-
-
+    # Create an EmailMessage object and set it up for HTML
     em = EmailMessage()
     em["From"] = sender_email
     em["To"] = receiver_email
     em["Subject"] = subject
-    em.set_content(body)
 
+    # Set the email content as HTML
+    em.add_alternative(html_body, subtype="html")
+
+    # Send the email via Gmail's SMTP server
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
         smtp.login(sender_email, password)
-        smtp.sendmail(sender_email, receiver_email, em.as_string())
+        smtp.send_message(em)
+
     print(f"Email sent successfully to {receiver_email}!")
 
     # Return the serialized data in the response
