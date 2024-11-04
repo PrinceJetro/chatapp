@@ -125,10 +125,14 @@ def createComplaint(request):
     subject = "Someone made a complaint"
     body = f"""
 Dear Sir,
-Category: data["category"]
-Body: data["complaint"]
-<img src={image_url} >
+
+Category: {data["category"]}
+
+Body: {data["complaint"]}
+
+<img src="{image_url}" alt="Attached Image">
 """
+
 
     em = EmailMessage()
     em["From"] = sender_email
