@@ -58,7 +58,7 @@ def createComplaint(request):
             filename = storage.save(post, image_file)
             image_url = storage.url(filename)
         except:
-            return HttpResponse("Failed to upload image to Supabase storage. Please try again.")
+            return print("Failed to upload image to Supabase storage. Please try again.")
 
         # Assign the URL of the uploaded image
         global url 
@@ -78,40 +78,40 @@ def createComplaint(request):
     serializer = ComplaintSerializer(complaint, many=False)
 
     # Email details
-    sender_email = 'princejetro123@gmail.com'
-    password = "iatu bier ypec yeqq"
-    receiver_email = 'davidblessing603@gmail.com'
-    subject = "Someone made a complaint"
+    # sender_email = 'princejetro123@gmail.com'
+    # password = "iatu bier ypec yeqq"
+    # receiver_email = 'davidblessing603@gmail.com'
+    # subject = "Someone made a complaint"
 
-    # Create the HTML body content
-    html_body = f"""
-    <!DOCTYPE html>
-    <html>
-    <body>
-        <p>Dear Sir,</p>
-        <p>Category: {data["category"]}</p>
-        <p>Body: {data["complaint"]}</p>
-        <p><img src="{image_url}" alt="Attached Image"></p>
-    </body>
-    </html>
-    """
+    # # Create the HTML body content
+    # html_body = f"""
+    # <!DOCTYPE html>
+    # <html>
+    # <body>
+    #     <p>Dear Sir,</p>
+    #     <p>Category: {data["category"]}</p>
+    #     <p>Body: {data["complaint"]}</p>
+    #     <p><img src="{image_url}" alt="Attached Image"></p>
+    # </body>
+    # </html>
+    # """
 
-    # Create an EmailMessage object and set it up for HTML
-    em = EmailMessage()
-    em["From"] = sender_email
-    em["To"] = receiver_email
-    em["Subject"] = subject
+    # # Create an EmailMessage object and set it up for HTML
+    # em = EmailMessage()
+    # em["From"] = sender_email
+    # em["To"] = receiver_email
+    # em["Subject"] = subject
 
-    # Set the email content as HTML
-    em.add_alternative(html_body, subtype="html")
+    # # Set the email content as HTML
+    # em.add_alternative(html_body, subtype="html")
 
-    # Send the email via Gmail's SMTP server
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-        smtp.login(sender_email, password)
-        smtp.send_message(em)
+    # # Send the email via Gmail's SMTP server
+    # context = ssl.create_default_context()
+    # with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+    #     smtp.login(sender_email, password)
+    #     smtp.send_message(em)
 
-    print(f"Email sent successfully to {receiver_email}!")
+    # print(f"Email sent successfully to {receiver_email}!")
 
     # Return the serialized data in the response
     return Response(serializer.data)
