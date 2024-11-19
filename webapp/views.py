@@ -250,7 +250,7 @@ def send_contact_email(request):
 
     # Email content
     sender_email = 'princejetro123@gmail.com'
-    recipient_email = 'adegbuyijephthah@gmail.com'
+    recipient_email = 'olanikedairocentre@gmail.com'
     password = "iatu bier ypec yeqq"
     subject = "New Contact Request from School Website"
     body = f"""
