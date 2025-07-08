@@ -360,6 +360,8 @@ Automated Form Submission System, PrinceJetro Web Dev Team
 
 
 
+# Example Django views.py for your blog API
+
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -369,22 +371,63 @@ from .serializers import BlogPostSerializer, BlogPostListSerializer
 
 class BlogPostViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BlogPost.objects.filter(is_published=True)
+    lookup_field = 'slug'  # Use slug instead of id for URLs
     
     def get_serializer_class(self):
         if self.action == 'list':
             return BlogPostListSerializer
         return BlogPostSerializer
     
+    def get_queryset(self):
+        """Filter queryset based on action"""
+        queryset = super().get_queryset()
+        
+        # For list view, exclude content to reduce payload
+        if self.action == 'list':
+            return queryset.only(
+                'id', 'title', 'slug', 'excerpt', 'image_src', 'image_alt',
+                'published_date', 'read_time', 'tags', 'is_published'
+            )
+        
+        return queryset
+    
     @action(detail=False, methods=['get'])
     def featured(self, request):
         """Get featured blog posts"""
-        featured_posts = self.queryset.filter(is_featured=True)
-        serializer = self.get_serializer(featured_posts, many=True)
+        featured_posts = self.get_queryset().filter(is_featured=True)
+        serializer = BlogPostListSerializer(featured_posts, many=True)
         return Response(serializer.data)
     
     @action(detail=False, methods=['get'])
     def recent(self, request):
         """Get recent blog posts"""
-        recent_posts = self.queryset.order_by('-published_date')[:5]
-        serializer = self.get_serializer(recent_posts, many=True)
+        recent_posts = self.get_queryset().order_by('-published_date')[:5]
+        serializer = BlogPostListSerializer(recent_posts, many=True)
         return Response(serializer.data)
+
+# Alternative: Function-based views if you prefer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['GET'])
+def blog_post_list(request):
+    """Get list of blog posts (without full content)"""
+    posts = BlogPost.objects.filter(is_published=True).only(
+        'id', 'title', 'slug', 'excerpt', 'image_src', 'image_alt',
+        'published_date', 'read_time', 'tags'
+    )
+    serializer = BlogPostListSerializer(posts, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def blog_post_detail(request, slug):
+    """Get single blog post with full content"""
+    try:
+        post = BlogPost.objects.get(slug=slug, is_published=True)
+        serializer = BlogPostSerializer(post)
+        return Response(serializer.data)
+    except BlogPost.DoesNotExist:
+        return Response(
+            {'error': 'Blog post not found'}, 
+            status=status.HTTP_404_NOT_FOUND
+        )
