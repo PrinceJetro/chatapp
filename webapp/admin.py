@@ -5,3 +5,4 @@ from .models  import *
 admin.site.register(Complaint)
 admin.site.register(User)
 admin.site.register(OnlineClass)
+admin.site.register(BlogPost)

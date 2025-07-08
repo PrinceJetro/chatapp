@@ -358,3 +358,33 @@ Automated Form Submission System, PrinceJetro Web Dev Team
 #     else:
 #         return HttpResponse("No image uploaded")
 
+
+
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from .models import BlogPost
+from .serializers import BlogPostSerializer, BlogPostListSerializer
+
+class BlogPostViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = BlogPost.objects.filter(is_published=True)
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return BlogPostListSerializer
+        return BlogPostSerializer
+    
+    @action(detail=False, methods=['get'])
+    def featured(self, request):
+        """Get featured blog posts"""
+        featured_posts = self.queryset.filter(is_featured=True)
+        serializer = self.get_serializer(featured_posts, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def recent(self, request):
+        """Get recent blog posts"""
+        recent_posts = self.queryset.order_by('-published_date')[:5]
+        serializer = self.get_serializer(recent_posts, many=True)
+        return Response(serializer.data)
